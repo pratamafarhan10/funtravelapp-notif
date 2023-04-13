@@ -1,5 +1,7 @@
 package com.funtravelapp.notif.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.funtravelapp.notif.model.notifStatus.NotifStatus;
 import com.funtravelapp.notif.repository.NotifStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,11 @@ public class NotifStatusService {
     @Autowired
     NotifStatusRepository repository;
 
-    public boolean create(NotifStatus request){
-        request.setStatus(EmailStatus.SENT.toString());
-        repository.save(request);
+    public boolean create(String request) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        NotifStatus req = mapper.readValue(request, NotifStatus.class);
+        req.setStatus(EmailStatus.SENT.toString());
+        repository.save(req);
 
         return true;
     }
