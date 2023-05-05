@@ -1,6 +1,5 @@
 package com.funtravelapp.notif.controller;
 
-import com.funtravelapp.notif.model.notifStatus.NotifStatus;
 import com.funtravelapp.notif.responseMapper.ResponseMapper;
 import com.funtravelapp.notif.service.NotifStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/notification")

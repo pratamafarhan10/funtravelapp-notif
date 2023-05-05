@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface NotifStatusRepository extends JpaRepository<NotifStatus, Integer> {
-    Optional<NotifStatus> findByChainingId(String chainingId);
+    Optional<NotifStatus> findByTransactionId(Integer transactionId);
 }

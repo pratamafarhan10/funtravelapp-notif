@@ -17,6 +17,8 @@ public class NotifStatus {
     private Integer id;
     @Column(name = "chaining_id")
     private String chainingId;
+    @Column(name = "transaction_id")
+    private Integer transactionId;
     @Column(name = "customer_id")
     private Integer customerId;
     @Column(name = "seller_id")

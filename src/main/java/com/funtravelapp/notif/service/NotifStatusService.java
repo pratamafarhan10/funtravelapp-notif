@@ -29,8 +29,9 @@ public class NotifStatusService {
     public boolean create(String request) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         CreateNotifDTO req = mapper.readValue(request, CreateNotifDTO.class);
+        System.out.println("\nData received: " + request);
 
-        Optional<NotifStatus> opt = repository.findByChainingId(req.getChainingId());
+        Optional<NotifStatus> opt = repository.findByTransactionId(req.getTransactionId());
         if (opt.isPresent()){
             NotifStatus notifStatus = opt.get();
             if (notifStatus.getStatus().equalsIgnoreCase(EmailStatus.SENT.toString())){
@@ -46,13 +47,14 @@ public class NotifStatusService {
                 .chainingId(req.getChainingId())
                 .customerId(req.getCustomerId())
                 .sellerId(req.getSellerId())
+                .transactionId(req.getTransactionId())
                 .customerEmail("customer@gmail.com")
                 .sellerEmail("seller@gmail.com")
                 .status(EmailStatus.SENT.toString())
                 .build();
         repository.save(entity);
 
-        UpdateNotifStatusDTO updateNotifStatusDTO = UpdateNotifStatusDTO.builder().chainingId(req.getChainingId()).isInvoiceSent("Y").build();
+        UpdateNotifStatusDTO updateNotifStatusDTO = UpdateNotifStatusDTO.builder().chainingId(req.getChainingId()).isInvoiceSent("Y").transactionId(req.getTransactionId()).build();
 
         String msg = mapper.writeValueAsString(updateNotifStatusDTO);
         kafkaTemplate.send(kafkaTopicConfig.updateNotifStatus().name(), msg);
